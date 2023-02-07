@@ -35,6 +35,9 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: EasySearchBar(
           title: const Text('Example'),
           onSearch: (value) => setState(() => searchValue = value),
+          onSearchClosed: () {
+            print('test');
+          },
           actions: [
             IconButton(
               icon: const Icon(
