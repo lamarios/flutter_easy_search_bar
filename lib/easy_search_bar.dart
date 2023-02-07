@@ -481,7 +481,7 @@ class _EasySearchBarState extends State<EasySearchBar> with TickerProviderStateM
                                                                   onPressed: () {
                                                                     _controller.reverse();
                                                                     _searchController.clear();
-                                                                    widget.onSearch(_searchController.text);
+                                                                    // widget.onSearch(_searchController.text);
                                                                     _focusNode.unfocus();
                                                                     if (widget.onSearchClosed != null) {
                                                                       widget.onSearchClosed!();
