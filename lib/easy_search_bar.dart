@@ -97,6 +97,8 @@ class EasySearchBar extends StatefulWidget implements PreferredSizeWidget {
   final Function(String data)? onSuggestionTap;
   /// Can be used to set the debounce time for async data fetch
   final Duration debounceDuration;
+  /// Do something when the searchbar is closed
+  final Function? onSearchClosed;
 
   const EasySearchBar({
     Key? key,
@@ -129,7 +131,8 @@ class EasySearchBar extends StatefulWidget implements PreferredSizeWidget {
     this.suggestionBackgroundColor,
     this.animationDuration = const Duration(milliseconds: 450),
     this.debounceDuration = const Duration(milliseconds: 400),
-    this.searchTextKeyboardType = TextInputType.text
+    this.searchTextKeyboardType = TextInputType.text,
+    this.onSearchClosed,
   }) : assert(elevation == null || elevation >= 0.0),
         super(key: key);
 
@@ -406,7 +409,12 @@ class _EasySearchBarState extends State<EasySearchBar> with TickerProviderStateM
                                           padding: const EdgeInsets.only(right: 10),
                                           child: IconButton(
                                             icon: const Icon(Icons.arrow_back_outlined),
-                                            onPressed: () => Navigator.pop(context),
+                                            onPressed: () {
+                                              if(widget.onSearchClosed != null){
+                                                widget.onSearchClosed!();
+                                              }
+                                              Navigator.pop(context);
+                                            },
                                             tooltip: MaterialLocalizations.of(context).backButtonTooltip
                                           ),
                                         ),
@@ -451,7 +459,7 @@ class _EasySearchBarState extends State<EasySearchBar> with TickerProviderStateM
                                         )
                                       );
                                     }
-                        
+
                                     return IconTheme(
                                       data: iconTheme,
                                       child: widget.actions[index]
